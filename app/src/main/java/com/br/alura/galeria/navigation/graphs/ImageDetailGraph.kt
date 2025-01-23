@@ -11,10 +11,6 @@ import androidx.navigation.compose.composable
 import com.br.alura.galeria.R
 import com.br.alura.galeria.navigation.Destinations
 import com.br.alura.galeria.ui.imageDetail.ImageDetailScreen
-import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.label.ImageLabeling
-import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
-
 
 fun NavGraphBuilder.imageDetailGraph() {
     composable(
@@ -30,15 +26,6 @@ fun NavGraphBuilder.imageDetailGraph() {
             description = description,
             onImageChange = {
                 currentImage = it
-
-                val image = InputImage.fromFilePath(context, it)
-                val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
-
-                labeler.process(image)
-                    .addOnSuccessListener { labels ->
-                        description = labels.map { it.text }.toString()
-                    }
-
             }
         )
     }
