@@ -67,7 +67,7 @@ fun ImageDetailScreen(
                 text = "GALERI-IA",
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 24.sp,
-                color = MaterialTheme.colorScheme.background,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp)
             )
         }
@@ -113,11 +113,11 @@ fun ImageDetailScreen(
                 Text(
                     text = "Tags:",
                     fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.onBackground
                 )
                 Text(
                     text = description,
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             }
         }

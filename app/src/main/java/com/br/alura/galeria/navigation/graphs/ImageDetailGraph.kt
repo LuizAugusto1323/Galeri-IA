@@ -24,19 +24,21 @@ fun NavGraphBuilder.imageDetailGraph() {
         var description by remember { mutableStateOf("#descrição #da #imagem") }
         val imageBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.image_test)
         var currentImage: Any by remember { mutableStateOf(imageBitmap) }
-        val image: InputImage = InputImage.fromBitmap(imageBitmap, 0)
-        val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
-
-        labeler.process(image)
-            .addOnSuccessListener { labels ->
-                description = labels.map { it.text }.toString()
-            }
 
         ImageDetailScreen(
             defaultImage = currentImage,
             description = description,
             onImageChange = {
                 currentImage = it
+
+                val image = InputImage.fromFilePath(context, it)
+                val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
+
+                labeler.process(image)
+                    .addOnSuccessListener { labels ->
+                        description = labels.map { it.text }.toString()
+                    }
+
             }
         )
     }
