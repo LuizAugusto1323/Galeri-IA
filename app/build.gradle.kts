@@ -55,7 +55,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
@@ -82,5 +81,5 @@ dependencies {
 
     implementation(libs.hilt.navigation.compose)
     implementation(libs.navigation.compose)
-
+    implementation(libs.image.labeling)
 }

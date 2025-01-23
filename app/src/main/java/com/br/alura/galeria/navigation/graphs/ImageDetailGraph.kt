@@ -11,6 +11,9 @@ import androidx.navigation.compose.composable
 import com.br.alura.galeria.R
 import com.br.alura.galeria.navigation.Destinations
 import com.br.alura.galeria.ui.imageDetail.ImageDetailScreen
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.label.ImageLabeling
+import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 
 
 fun NavGraphBuilder.imageDetailGraph() {
@@ -18,20 +21,16 @@ fun NavGraphBuilder.imageDetailGraph() {
         route = Destinations.ImageDetail.route
     ) {
         val context = LocalContext.current
+        var description by remember { mutableStateOf("#descrição #da #imagem") }
+        val imageBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.image_test)
+        var currentImage: Any by remember { mutableStateOf(imageBitmap) }
+        val image: InputImage = InputImage.fromBitmap(imageBitmap, 0)
+        val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
 
-        var description by remember {
-            mutableStateOf("#descrição #da #imagem")
-        }
-
-        val imageBitmap = BitmapFactory.decodeResource(
-            context.resources,
-            R.drawable.image_test
-        )
-
-        var currentImage: Any by remember {
-            mutableStateOf(imageBitmap)
-        }
-
+        labeler.process(image)
+            .addOnSuccessListener { labels ->
+                description = labels.map { it.text }.toString()
+            }
 
         ImageDetailScreen(
             defaultImage = currentImage,
